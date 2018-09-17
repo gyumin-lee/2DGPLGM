@@ -26,17 +26,23 @@ def move_up():
 
 
 def move_left():
-    pass
+    x, y = 800 // 2, 90
+    while x < 800 -25 | x > 25:
+        clear_canvas_now()
+        grass.draw_now(400, 30)
+        character.draw_now(x, y)
+        x -= 2
+        delay(0.01)
+
 
 def move_dowm():
     pass
-
 def move_from_left_to_center():
     pass
 
 def make_rectangle():
     # move_from_center_to_right()
-    move_up()
+    # move_up()
     move_left()
     move_dowm()
     move_from_left_to_center()
