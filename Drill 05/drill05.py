@@ -47,7 +47,14 @@ def move_dowm():
         delay(0.01)
 
 def move_from_left_to_center():
-   pass
+    x, y = 800 // 2, 90
+
+    while x > 50:
+        clear_canvas_now()
+        grass.draw_now(400, 30)
+        character.draw_now(x, y)
+        x -= 2
+        delay(0.01)
 
 
 
@@ -55,8 +62,8 @@ def make_rectangle():
      # move_from_center_to_right()
      # move_up()
      # move_left()
-      move_dowm()
-     # move_from_left_to_center()
+      #move_dowm()
+      move_from_left_to_center()
 
 def make_circle():
     cx, cy,r=800//2, 600//2, (600-180) // 2
