@@ -147,8 +147,19 @@ def move_682_336():
         get_events()
 
 def move_712_349():
-    pass
+    x, y = 682, 336
+    frame=0
 
+    while (x < 712 and y  < 349 ):
+        clear_canvas_now()
+        grass.draw_now(400, 30)
+        character.clip_draw(frame * 100, 100, 100, 100, x, y)
+        update_canvas()
+        frame = (frame + 1) % 8
+        x += 2
+        y += 1
+        delay(0.05)
+        get_events()
 
 
 
@@ -161,7 +172,7 @@ while True:
     # move_316_225()
     # move_510_92()
     # move_692_518()
-    move_682_336()
+    #move_682_336()
     move_712_349()
 
 
