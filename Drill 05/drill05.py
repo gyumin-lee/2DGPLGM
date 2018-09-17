@@ -1,5 +1,4 @@
 from pico2d import *
-import math
 
 open_canvas()
 
@@ -16,16 +15,40 @@ def move_203_535():
         character.clip_draw(frame * 100, 0, 100, 100, x, y)
         update_canvas()
         frame = (frame + 1) % 8
-        x -= 5
-        y += 5
+        x -= 1.3
+        y += 3
         delay(0.05)
         get_events()
 
 def move_132_243():
-    pass
+    x, y = 203, 535
+    frame=0
+
+    while (x > 132 and y > 243):
+        clear_canvas_now()
+        grass.draw_now(400, 30)
+        character.clip_draw(frame * 100, 0, 100, 100, x, y)
+        update_canvas()
+        frame = (frame + 1) % 8
+        x -= 5
+        y -= 5
+        delay(0.05)
+        get_events()
 
 def move_535_470():
-    pass
+    x, y = 132, 243
+    frame =0
+
+    while (x < 535 and y <470):
+        clear_canvas_now()
+        grass.draw_now(400, 30)
+        character.clip_draw(frame * 100, 100, 100, 100, x, y)
+        update_canvas()
+        frame = (frame + 1) % 8
+        x += 3
+        y += 6
+        delay(0.05)
+        get_events()
 
 def move_477_203():
     pass
@@ -52,8 +75,8 @@ def move_712_349():
 
 
 while True:
-    move_203_535()
-    move_132_243()
+    # move_203_535()
+    # move_132_243()
     move_535_470()
     move_477_203()
     move_715_136()
