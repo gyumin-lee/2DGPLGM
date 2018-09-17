@@ -4,85 +4,51 @@ import math
 open_canvas()
 
 grass = load_image('grass.png')
-character = load_image('character.png')
+character = load_image('animation_sheet.png')
 
-def move_from_center_to_right():
-    x, y = 800 // 2, 90
+def move_203_to_535():
+    pass
 
-    while x < 800 - 25:
-        clear_canvas_now()
-        grass.draw_now(400, 30)
-        character.draw_now(x,y)
-        x += 2
-        delay(0.01)
+def move_132_to_243():
+    pass
 
-def move_up():
-    x, y = 800 -25, 90
-    while y < 600 - 50:
-        clear_canvas_now()
-        grass.draw_now(400, 30)
-        character.draw_now(x, y)
-        y += 2
-        delay(0.01)
+def move_535_t0_470():
+    pass
 
+def move_477_to_203():
+    pass
 
-def move_left():
-    x, y = 800 -25 , 600 -50
-    while x > 0 :
-        clear_canvas_now()
-        grass.draw_now(400, 30)
-        character.draw_now(x, y)
-        x -= 2
-        delay(0.01)
+def move_715_to_136():
+    pass
 
+def move_316_to_225():
+    pass
 
-def move_dowm():
-    x, y =  25 , 600 - 25
+def move_510_to_92():
+    pass
 
-    while y > 50:
-        clear_canvas_now()
-        grass.draw_now(400, 30)
-        character.draw_now(x, y)
-        y -= 2
-        delay(0.01)
+def move_692_to_518():
+    pass
 
-def move_from_left_to_center():
-    x, y = 800 // 2, 90
+def move_682_to_336():
+    pass
 
-    while x > 50:
-        clear_canvas_now()
-        grass.draw_now(400, 30)
-        character.draw_now(x, y)
-        x -= 2
-        delay(0.01)
-
-
-
-def make_rectangle():
-     move_from_center_to_right()
-     move_up()
-     move_left()
-     move_dowm()
-     move_from_left_to_center()
-
-def make_circle():
-    cx, cy,r=800//2, 600//2, (600-180) // 2
-    degree = -90
-    while degree<270:
-        radian = math.radians(degree)
-        x= cx + r * math.cos(radian)
-        y= cy +r * math.sin(radian)
-        clear_canvas_now()
-        grass.draw_now(400,30)
-        character.draw_now(x, y)
-        degree += 1
-        delay(0.01)
+def move_712_to_349():
+    pass
 
 
 
 
 while True:
-    make_rectangle()
-    make_circle()
-    
-close_canvas()
+    move_203_to_535()
+    move_132_to_243()
+    move_535_t0_470()
+    move_477_to_203()
+    move_715_to_136()
+    move_316_to_225()
+    move_510_to_92()
+    move_692_to_518()
+    move_682_to_336()
+    move_712_to_349()
+
+
