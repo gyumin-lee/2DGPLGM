@@ -7,6 +7,7 @@ KPU_WIDTH, KPU_HEIGHT = 1280, 1024
 def handle_events():
     global running
     global x, y
+    global gx, gy
     global Cx, Cy
     events = get_events()
     for event in events:
@@ -29,12 +30,15 @@ running = True
 x, y = KPU_WIDTH // 2, KPU_HEIGHT // 2
 frame = 0
 Cx, Cy = 0, 0
+gx, gy = 0, 0
+sx, sy = 0, 0
 show_cursor()
 
 while running:
     clear_canvas()
     kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
     character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
+    character.clip_draw(frame * 100, 0, 100, 100, x, y )
     Mouse.draw(Cx + 25, Cy - 25)
     update_canvas()
 
