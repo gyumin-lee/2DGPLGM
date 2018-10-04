@@ -23,6 +23,11 @@ def move_randompoint(p1, p2):
         clear_canvas()
 
 
+        if p1[0]>p2[0]:
+            moving =0
+        else:
+            moving =100
+
         kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
         character.clip_draw(frame * 100, moving, 100, 100, x, y)
         update_canvas()
@@ -38,6 +43,12 @@ while True:
 
 
     i = (i + 1) % 10
+
+
+
+
+
+
 
 
 close_canvas()
