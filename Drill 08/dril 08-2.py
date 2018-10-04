@@ -8,6 +8,7 @@ character = load_image('animation_sheet.png')
 
 
 
-       
+kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
+update_canvas()
 
 close_canvas()
