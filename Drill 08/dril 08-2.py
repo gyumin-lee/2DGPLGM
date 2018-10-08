@@ -6,6 +6,7 @@ open_canvas(KPU_WIDTH, KPU_HEIGHT)
 kpu_ground = load_image('KPU_GROUND.png')
 character = load_image('animation_sheet.png')
 
+
 def move_randompoint(p1, p2):
     global x, y
     global frame
