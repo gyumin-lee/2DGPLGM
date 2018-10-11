@@ -1,6 +1,4 @@
 import game_framework
-import title_state
-import main_state
 import pico2d
 
 import start_state
