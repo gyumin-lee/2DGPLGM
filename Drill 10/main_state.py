@@ -6,7 +6,7 @@ from pico2d import *
 
 import game_framework
 import title_state
-import pause_state
+import pause_state_2
 
 
 
@@ -47,7 +47,7 @@ class Boy:
 
 class pause:
     def __init__(self):
-        self.image = load_image('paused.png')
+        self.image = load_image('paused_2.png')
     def draw(self):
         self.image.draw(400, 300)
 
@@ -82,7 +82,7 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(title_state)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
-            game_framework.push_state(pause_state)
+            game_framework.push_state(pause_state_2)
 
 
 def update():
