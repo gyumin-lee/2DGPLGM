@@ -26,6 +26,7 @@ class Grass:
         self.image.draw(400, 30)
 
 
+
 def handle_events():
     global running
     events = get_events()
@@ -41,7 +42,6 @@ def handle_events():
 open_canvas()
 
 team = [Boy() for i in range(11)]
-balls = [balls() for i in range(20)]
 grass = Grass()
 
 running =True;
@@ -51,10 +51,11 @@ while running:
     for boy in team:
         boy.update()
 
-     for boy in team:
+    for boy in team:
          boy.draw()
          delay(0.05)
 
     clear_canvas()
 
 # finalization code
+close_canvas()
