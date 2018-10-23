@@ -20,9 +20,6 @@ def handle_events():
             running = False
 
 
-    pass
-
-
 while x < 800 and running:
     clear_canvas()
     grass.draw(400, 30)
