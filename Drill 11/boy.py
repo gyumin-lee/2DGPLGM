@@ -4,7 +4,7 @@ from ball import Ball
 import game_world
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER, SPACE, SHIFT_DOWN, SHIFT_UP = range(6)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER, SPACE, SHIFT_DOWN, SHIFT_UP, SHIFT_TIMER = range(9)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -97,7 +97,8 @@ class SleepState:
         boy.frame = 0
 
     def exit(boy, event):
-        pass
+        if event == SPACE:
+            boy.fire_ball()
 
 
     def do(boy):
@@ -113,24 +114,40 @@ class SleepState:
 
 class DashState:
 
-
     def enter(boy, event):
-        pass
+        boy.frame = 0
+        if event == RIGHT_DOWN and SHIFT_DOWN:
+            boy.velocity += 20
+        elif event == LEFT_DOWN and SHIFT_DOWN:
+            boy.velocity -= 20
+        elif event == RIGHT_UP or SHIFT_UP:
+            boy.velocity -= 20
+        elif event == LEFT_UP or SHIFT_UP:
+            boy.velocity += 20
+        boy.dir = boy.velocity
 
     def exit(boy, event):
-        pass
+        if event == SPACE:
+            boy.fire_ball()
 
     def do(boy):
-        pass
+        boy.frame = (boy.frame + 1) % 8
+        boy.timer -= 5
+        boy.x += boy.velocity
+        boy.x = clamp(25, boy.x, 1600 - 25)
 
     def draw(boy):
-        pass
+        if boy.velocity == 1:
+            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
+        else:
+            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
 
 
 next_state_table = {
-    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SLEEP_TIMER: SleepState, SPACE: IdleState },
-    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, SPACE: RunState},
-    SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState, LEFT_UP: RunState, RIGHT_UP: RunState, SPACE: IdleState}
+    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SLEEP_TIMER: SleepState, SPACE: IdleState, SHIFT_UP:IdleState, SHIFT_DOWN:IdleState },
+    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, SPACE: RunState, SHIFT_DOWN:DashState, SHIFT_UP:RunState},
+    SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState, LEFT_UP: RunState, RIGHT_UP: RunState, SPACE: IdleState, SHIFT_DOWN: IdleState, SHIFT_UP:IdleState},
+    DashState: {RIGHT_UP: IdleState, LEFT_UP:IdleState, RIGHT_DOWN: IdleState, LEFT_DOWN: IdleState, SPACE:DashState, SHIFT_DOWN:RunState, SHIFT_UP:RunState, SHIFT_TIMER: RunState}
 
 }
 
