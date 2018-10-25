@@ -12,10 +12,10 @@ key_event_table = {
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
     (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
     (SDL_KEYDOWN, SDLK_SPACE): SPACE,
-    (SDL_KEYDOWN, SDL_SCANCODE_LSHIFT ): SHIFT_DOWN,
-    (SDL_KEYUP, SDL_SCANCODE_LSHIFT): SHIFT_UP,
-    (SDL_KEYDOWN, SDL_SCANCODE_RSHIFT ): SHIFT_DOWN,
-    (SDL_KEYUP, SDL_SCANCODE_RSHIFT): SHIFT_UP
+    (SDL_KEYDOWN, SDLK_LSHIFT ): SHIFT_DOWN,
+    (SDL_KEYUP, SDLK_LSHIFT): SHIFT_UP,
+    (SDL_KEYDOWN, SDLK_RSHIFT ): SHIFT_DOWN,
+    (SDL_KEYUP, SDLK_RSHIFT): SHIFT_UP
 }
 
 
@@ -116,14 +116,14 @@ class DashState:
 
     def enter(boy, event):
         boy.frame = 0
-        if event == RIGHT_DOWN and SHIFT_DOWN:
-            boy.velocity += 20
-        elif event == LEFT_DOWN and SHIFT_DOWN:
-            boy.velocity -= 20
-        elif event == RIGHT_UP or SHIFT_UP:
-            boy.velocity -= 20
-        elif event == LEFT_UP or SHIFT_UP:
-            boy.velocity += 20
+        if event == RIGHT_DOWN:
+            boy.velocity += 5
+        elif event == LEFT_DOWN:
+            boy.velocity -= 5
+        elif event == RIGHT_UP:
+            boy.velocity -= 5
+        elif event == LEFT_UP:
+            boy.velocity += 5
         boy.dir = boy.velocity
 
     def exit(boy, event):
@@ -133,7 +133,7 @@ class DashState:
     def do(boy):
         boy.frame = (boy.frame + 1) % 8
         boy.timer -= 5
-        boy.x += boy.velocity
+        boy.x += boy.velocity*3
         boy.x = clamp(25, boy.x, 1600 - 25)
 
     def draw(boy):

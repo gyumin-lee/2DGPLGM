@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c44568c-e5ab-46b9-be9f-95fc63c41e1a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Drill 11/boy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Drill 11/boy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Drill 11/mygame.py" beforeDir="false" afterPath="$PROJECT_DIR$/Drill 11/mygame.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,12 +39,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="3913" />
+          <entry key="py" value="3994" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="3913" />
+          <entry key="Python" value="3994" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -57,15 +55,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Drill 11/boy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="149" column="156" selection-start-line="149" selection-start-column="156" selection-end-line="149" selection-end-column="156" />
+            <state relative-caret-position="-760">
+              <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <marker date="1540458930000" expanded="true" signature="1827:1889" ph="..." />
-                <marker date="1540458930000" expanded="true" signature="2934:3299" ph="..." />
-                <marker date="1540458930000" expanded="true" signature="3375:3381" ph="..." />
-                <marker date="1540458930000" expanded="true" signature="3393:3536" ph="..." />
-                <marker date="1540458930000" expanded="true" signature="4314:4315" ph="..." />
+                <marker date="1540459760000" expanded="true" signature="1840:1902" ph="..." />
+                <marker date="1540459760000" expanded="true" signature="2947:3254" ph="..." />
+                <marker date="1540459760000" expanded="true" signature="3330:3336" ph="..." />
+                <marker date="1540459760000" expanded="true" signature="3348:3493" ph="..." />
+                <marker date="1540459760000" expanded="true" signature="4420:4421" ph="..." />
               </folding>
             </state>
           </provider>
@@ -141,7 +139,7 @@
         <entry file="file://$PROJECT_DIR$/Drill 11/mygame.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="133">
-              <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -607,16 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Drill 11/mygame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Drill 11/game_world.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -629,17 +617,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Drill 11/mygame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Drill 11/boy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="149" column="156" selection-start-line="149" selection-start-column="156" selection-end-line="149" selection-end-column="156" />
+        <state relative-caret-position="-760">
+          <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <marker date="1540458930000" expanded="true" signature="1827:1889" ph="..." />
-            <marker date="1540458930000" expanded="true" signature="2934:3299" ph="..." />
-            <marker date="1540458930000" expanded="true" signature="3375:3381" ph="..." />
-            <marker date="1540458930000" expanded="true" signature="3393:3536" ph="..." />
-            <marker date="1540458930000" expanded="true" signature="4314:4315" ph="..." />
+            <marker date="1540459760000" expanded="true" signature="1840:1902" ph="..." />
+            <marker date="1540459760000" expanded="true" signature="2947:3254" ph="..." />
+            <marker date="1540459760000" expanded="true" signature="3330:3336" ph="..." />
+            <marker date="1540459760000" expanded="true" signature="3348:3493" ph="..." />
+            <marker date="1540459760000" expanded="true" signature="4420:4421" ph="..." />
           </folding>
         </state>
       </provider>
