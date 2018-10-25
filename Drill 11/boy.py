@@ -116,13 +116,13 @@ class DashState:
 
     def enter(boy, event):
         if event == RIGHT_DOWN:
-            boy.velocity += 20
+            boy.velocity += 15
         elif event == LEFT_DOWN:
-            boy.velocity -= 20
+            boy.velocity -= 15
         elif event == RIGHT_UP:
-            boy.velocity -= 20
+            boy.velocity -= 15
         elif event == LEFT_UP:
-            boy.velocity += 20
+            boy.velocity += 15
         boy.dir = boy.velocity
         boy.timer = 100
 
