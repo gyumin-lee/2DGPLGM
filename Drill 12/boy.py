@@ -12,6 +12,8 @@ RUN_SPEED_KMPH = 20.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+GOAST_SPEED = 360 * 2 #원의 둘레 360에서 두번 돌아 720
+
 
 # Boy Action Speed
 # fill expressions correctly
@@ -58,8 +60,8 @@ class IdleState:
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        boy.timer -= 1
-        if boy.timer == 0:
+        boy.timer -= game_framework.frame_time
+        if boy.timer <= 0:
             boy.add_event(SLEEP_TIMER)
 
     @staticmethod
@@ -107,26 +109,70 @@ class SleepState:
 
     @staticmethod
     def enter(boy, event):
-        boy.frame = 0
-
-    @staticmethod
-    def exit(boy, event):
         pass
 
     @staticmethod
+    def exit(boy, event):
+
+        boy.image.opacify(1)
+
+    @staticmethod
     def do(boy):
+
+        boy.opac = random.randint(0, 1000) / 1000
+
+        boy.ghost_timer = get_time()
+
+        boy.elapse_time = boy.ghost_timer - boy.start_timer
+
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
     @staticmethod
     def draw(boy):
+
         if boy.dir == 1:
-            boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
+
+            boy.image.opacify(1)
+
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25,
+                                          100, 100)
+
+            boy.image.opacify(boy.opac)
+
+            if boy.elapse_time < 1:
+
+                boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100,
+                                              (3.141592 - (boy.elapse_time * 3.141592)) / 2, '',
+                                              boy.x - (25 - (boy.elapse_time * 25)),
+                                              boy.y - (25 - (boy.elapse_time * 25)), 100, 100)
+
+            else:
+
+                boy.image.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.r * math.cos(
+                    math.radians(270 + ANGLE_PER_SECOND * (boy.elapse_time % 1))) + boy.x,
+                                    100 * math.sin(math.radians(270 + 720 * (boy.elapse_time % 1))) + boy.y * 2)
+
         else:
-            boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
 
+            boy.image.opacify(1)
 
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25,
+                                          boy.y - 25, 100, 100)
 
+            boy.image.opacify(boy.opac)
 
+            if boy.elapse_time < 1:
+
+                boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100,
+                                              (-3.141592 + (boy.elapse_time * 3.141592)) / 2, '',
+                                              boy.x + (25 - (boy.elapse_time * 25)),
+                                              boy.y - (25 - (boy.elapse_time * 25)), 100, 100)
+
+            else:
+
+                boy.image.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.r * math.cos(
+                    math.radians(270 + ANGLE_PER_SECOND * (boy.elapse_time % 1))) + boy.x,
+                                    100 * math.sin(math.radians(270 + 720 * (boy.elapse_time % 1))) + boy.y * 2)
 
 
 next_state_table = {

@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c44568c-e5ab-46b9-be9f-95fc63c41e1a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/2D과제/character.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2D과제/library.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2D과제/music_room.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2D과제/ware_house.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2D과제/game_world.py" beforeDir="false" afterPath="$PROJECT_DIR$/2D과제/game_world.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2D과제/main_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/2D과제/main_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2D과제/캐릭터.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drill 12/boy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Drill 12/boy.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,12 +40,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="5283" />
+          <entry key="py" value="5406" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="5283" />
+          <entry key="Python" value="5406" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -89,11 +82,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Drill 12/boy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="49" column="30" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
+            <state relative-caret-position="285">
+              <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
-                <marker date="1540810638000" expanded="true" signature="1843:2190" ph="..." />
+                <marker date="1540818344000" expanded="true" signature="1913:2260" ph="..." />
               </folding>
             </state>
           </provider>
@@ -102,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Drill 11/boy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-171">
-              <caret line="3" column="17" lean-forward="true" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+            <state relative-caret-position="247">
+              <caret line="112" column="88" lean-forward="true" selection-start-line="95" selection-start-column="3" selection-end-line="112" selection-end-column="88" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -224,6 +217,11 @@
               <item name="2DGPLGM" type="b2602c69:ProjectViewProjectNode" />
               <item name="2DGPLGM" type="462c0819:PsiDirectoryNode" />
               <item name="2D과제" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="2DGPLGM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="2DGPLGM" type="462c0819:PsiDirectoryNode" />
+              <item name="Drill 11" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="2DGPLGM" type="b2602c69:ProjectViewProjectNode" />
@@ -639,16 +637,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Drill 11/boy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-171">
-          <caret line="3" column="17" lean-forward="true" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Drill 12/main_state.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -669,13 +657,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Drill 12/boy.py">
+    <entry file="file://$PROJECT_DIR$/Drill 11/boy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
-          <caret line="49" column="30" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
+          <caret line="112" column="88" lean-forward="true" selection-start-line="95" selection-start-column="3" selection-end-line="112" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Drill 12/boy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-            <marker date="1540810638000" expanded="true" signature="1843:2190" ph="..." />
+            <marker date="1540818344000" expanded="true" signature="1913:2260" ph="..." />
           </folding>
         </state>
       </provider>
