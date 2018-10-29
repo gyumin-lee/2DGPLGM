@@ -7,11 +7,7 @@ import game_framework
 import game_world
 
 from boy import Boy
-from music_room import Music room
-from library import Library
-from ware_house import Ware_house
-from exit import Exit
-
+from grass import Grass
 
 
 name = "MainState"
@@ -24,7 +20,6 @@ def enter():
     grass = Grass()
     game_world.add_object(grass, 0)
     game_world.add_object(boy, 1)
-
 
 
 def exit():
@@ -52,6 +47,7 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+    delay(0.01)
 
 
 def draw():
@@ -59,3 +55,9 @@ def draw():
     for game_object in game_world.all_objects():
         game_object.draw()
     update_canvas()
+
+
+
+
+
+
