@@ -6,11 +6,10 @@ from pico2d import *
 import game_framework
 import game_world
 
-from boy import Boy
-from music_room import Music room
-from library import Library
+from boy import  Boy
+from music_room import Music_room
 from ware_house import Ware_house
-from exit import Exit
+
 
 
 
@@ -18,11 +17,12 @@ name = "MainState"
 
 boy = None
 
+
 def enter():
     global boy
     boy = Boy()
-    grass = Grass()
-    game_world.add_object(grass, 0)
+    ware_house=Ware_house()
+    game_world.add_object(ware_house, 0)
     game_world.add_object(boy, 1)
 
 
@@ -58,4 +58,5 @@ def draw():
     clear_canvas()
     for game_object in game_world.all_objects():
         game_object.draw()
+    delay(0.07)
     update_canvas()

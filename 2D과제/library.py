@@ -2,7 +2,7 @@ from pico2d import *
 
 class Library:
     def __init__(self):
-        self.image = load_image('도서관.png')
+        self.image = load_image('library.png')
 
     def update(self):
         pass

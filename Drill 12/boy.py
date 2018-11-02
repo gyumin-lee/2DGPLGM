@@ -12,7 +12,6 @@ RUN_SPEED_KMPH = 20.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-GOAST_SPEED = 360 * 2 #원의 둘레 360에서 두번 돌아 720
 
 
 # Boy Action Speed
@@ -109,7 +108,8 @@ class SleepState:
 
     @staticmethod
     def enter(boy, event):
-        pass
+        boy.frame = 0
+
 
     @staticmethod
     def exit(boy, event):

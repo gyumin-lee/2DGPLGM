@@ -1,12 +1,11 @@
 from pico2d import *
 
-class Library:
+class Ware_house:
     def __init__(self):
-        self.image = load_image('창고.png')
+        self.image = load_image('ware_house.jpg')
 
     def update(self):
         pass
 
     def draw(self):
-        self.image.draw(400, 30)
-        self.image.draw(1200, 30)
+        self.image.draw(600,400)
