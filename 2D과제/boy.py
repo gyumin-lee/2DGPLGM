@@ -69,10 +69,14 @@ class RunState:
 
     @staticmethod
     def draw(boy):
-        if boy.dir == 1:
-            boy.image.clip_draw(0, 0,30, 30, boy.x, boy.y)
+        if boy.velocityX == 1:
+            boy.image.clip_draw(0, 0, 100, 100, boy.x, boy.y)
+        elif boy.velocityX == -1:
+            boy.image.clip_draw(0, 0, 100, 100, boy.x, boy.y)
+        elif boy.velocityY == 1:
+            boy.image.clip_draw(0, 0, 100, 100, boy.x, boy.y)
         else:
-            boy.image.clip_draw(0, 0, 30, 30, boy.x, boy.y)
+            boy.image.clip_draw(0, 0, 100, 100, boy.x, boy.y)
 
 
 
