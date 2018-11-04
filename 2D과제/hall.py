@@ -1,12 +1,11 @@
 from pico2d import *
 
-class Music_room:
+class Ware_house:
     def __init__(self):
-        self.image = load_image('music_room.png')
+        self.image = load_image('hall.png')
 
     def update(self):
         pass
 
     def draw(self):
-        self.image.draw(600, 400)
-
+        self.image.draw(600,400)

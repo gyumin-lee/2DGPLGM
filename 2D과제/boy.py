@@ -2,6 +2,7 @@ from pico2d import *
 import game_framework
 
 import game_world
+import Do_Read
 
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 RUN_SPEED_KMPH = 20.0  # Km / Hour
@@ -33,6 +34,52 @@ key_event_table = {
 
 
 # Boy States
+class IdleState:
+
+    @staticmethod
+    def enter(boy, event):
+        if event == RIGHT_DOWN:
+            boy.velocityX += RUN_SPEED_PPS
+        elif event == LEFT_DOWN:
+            boy.velocityX -= RUN_SPEED_PPS
+        elif event == UP_DOWN:
+            boy.velocityY += RUN_SPEED_PPS
+        elif event == DOWN_DOWN:
+            boy.velocityY -= RUN_SPEED_PPS
+        elif event == RIGHT_UP:
+            boy.velocityX -= RUN_SPEED_PPS
+        elif event == LEFT_UP:
+            boy.velocityX += RUN_SPEED_PPS
+        elif event == UP_UP:
+            boy.velocityY -= RUN_SPEED_PPS
+        elif event == DOWN_UP:
+            boy.velocityY += RUN_SPEED_PPS
+        boy.timer = get_time()
+
+    @staticmethod
+    def exit(boy, event):
+        if event == SPACE:
+            boy.Do_Read()
+
+
+    @staticmethod
+    def do(boy):
+        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+        boy.timer -= game_framework.frame_time
+
+
+    @staticmethod
+    def draw(boy):
+        if boy.velocityX == 1:
+            boy.image.clip_draw(int(boy.frame) * 100, 0, 50, 56, boy.x, boy.y)
+        elif boy.velocityX == -1:
+            boy.image.clip_draw(int(boy.frame) * 100, 30, 50, 56, boy.x, boy.y)
+        elif boy.velocityY == 1:
+            boy.image.clip_draw(int(boy.frame) * 100, 60, 50, 56, boy.x, boy.y)
+        elif boy.velocityY == -1:
+            boy.image.clip_draw(int(boy.frame) * 100, 90, 50, 56, boy.x, boy.y)
+
+
 class RunState:
 
     @staticmethod
@@ -58,6 +105,7 @@ class RunState:
     @staticmethod
     def exit(boy, event):
         if event == SPACE:
+            boy.Do_Read()
             pass
 
     @staticmethod
@@ -70,27 +118,58 @@ class RunState:
     @staticmethod
     def draw(boy):
         if boy.velocityX == 1:
-            boy.image.clip_draw(0, 0, 100, 100, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame)*100, 0, 50, 56, boy.x, boy.y)
         elif boy.velocityX == -1:
-            boy.image.clip_draw(0, 0, 100, 100, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame)*100, 30, 50, 56, boy.x, boy.y)
         elif boy.velocityY == 1:
-            boy.image.clip_draw(0, 0, 100, 100, boy.x, boy.y)
-        else:
-            boy.image.clip_draw(0, 0, 100, 100, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame)*100, 60, 50, 56, boy.x, boy.y)
+        elif boy.velocityY == -1:
+            boy.image.clip_draw(int(boy.frame)*100, 90, 50, 56, boy.x, boy.y)
 
 
+
+
+
+textGroup = Do_Read.TextGroup()
+
+class TalkState:
+    @staticmethod
+    def enter(boy,event):
+        pass
+
+    @staticmethod
+    def do(boy):
+        boy.frame = (boy.frame + 1) % 4
+        boy.x += boy.velocityX * game_framework.frame_time
+        boy.y += boy.velocityY * game_framework.frame_time
+
+
+    @staticmethod
+    def exit(boy,event):
+        pass
+
+    @staticmethod
+    def draw(boy):
+        if boy.velocityX == 1:
+            boy.image.clip_draw(boy.frame * 100, 0, 50, 56, boy.x, boy.y)
+        elif boy.velocityX == -1:
+            boy.image.clip_draw(boy.frame * 100, 30, 50, 56, boy.x, boy.y)
+        elif boy.velocityY == 1:
+            boy.image.clip_draw(boy.frame * 100, 60, 50, 56, boy.x, boy.y)
+        elif boy.velocityY == -1:
+            boy.image.clip_draw(boy.frame * 100, 90, 50, 56, boy.x, boy.y)
+        textGroup.draw(boy)
 
 next_state_table = {
-    RunState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: RunState}
+    RunState: {RIGHT_UP: RunState, LEFT_UP: IdleState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState},
+    TalkState: {RIGHT_UP: TalkState, LEFT_UP: TalkState, UP_UP: TalkState, DOWN_UP: TalkState, LEFT_DOWN: TalkState, RIGHT_DOWN: TalkState, UP_DOWN: TalkState, DOWN_DOWN: TalkState, SPACE: RunState},
+    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState}
 }
-
-
 class Boy:
 
     def __init__(self):
         self.x, self.y = 600, 400
         self.image = load_image('character.png')
-        self.dir = 1
         self.velocityX = 1
         self.velocityY = 1
         self.frame = 0
@@ -120,4 +199,3 @@ class Boy:
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
-

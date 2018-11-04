@@ -7,7 +7,6 @@ import game_framework
 import game_world
 
 from boy import  Boy
-from music_room import Music_room
 from ware_house import Ware_house
 
 
@@ -58,5 +57,5 @@ def draw():
     clear_canvas()
     for game_object in game_world.all_objects():
         game_object.draw()
-    delay(0.07)
+
     update_canvas()

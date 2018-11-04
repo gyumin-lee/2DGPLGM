@@ -92,7 +92,7 @@ class RunState:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 8
+        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         boy.x += boy.velocity * game_framework.frame_time
         boy.x = clamp(25, boy.x, 1600 - 25)
 
@@ -109,38 +109,26 @@ class SleepState:
     @staticmethod
     def enter(boy, event):
         boy.frame = 0
-
-
     @staticmethod
     def exit(boy, event):
-
         boy.image.opacify(1)
-
     @staticmethod
     def do(boy):
-
         boy.opac = random.randint(0, 1000) / 1000
-
         boy.ghost_timer = get_time()
-
         boy.elapse_time = boy.ghost_timer - boy.start_timer
-
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
     @staticmethod
     def draw(boy):
-
         if boy.dir == 1:
-
             boy.image.opacify(1)
-
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25,
                                           100, 100)
 
             boy.image.opacify(boy.opac)
 
             if boy.elapse_time < 1:
-
                 boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100,
                                               (3.141592 - (boy.elapse_time * 3.141592)) / 2, '',
                                               boy.x - (25 - (boy.elapse_time * 25)),
