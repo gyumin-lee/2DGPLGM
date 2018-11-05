@@ -64,21 +64,22 @@ class IdleState:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-
-
+        boy.count += 1
+        if boy.count == 5:
+            boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+            boy.count = 0
 
 
     @staticmethod
     def draw(boy):
         if boy.velocityX == 1:
-            boy.image.clip_draw(int(boy.frame) * 100, 0, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
         elif boy.velocityY == 1:
-            boy.image.clip_draw(int(boy.frame) * 100, 60, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 60, 50, 56, boy.x, boy.y)
         elif boy.velocityX == -1:
-            boy.image.clip_draw(int(boy.frame) * 100, 120, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 120, 50, 56, boy.x, boy.y)
         elif boy.velocityY == -1:
-            boy.image.clip_draw(int(boy.frame) * 100, 180, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 180, 50, 56, boy.x, boy.y)
 class RunState:
 
     @staticmethod
@@ -109,7 +110,11 @@ class RunState:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 4
+        boy.count += 1
+        if boy.count == 5:
+            boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+            boy.count = 0
+
         boy.x += boy.velocityX * game_framework.frame_time
         boy.y += boy.velocityY * game_framework.frame_time
 
@@ -117,13 +122,13 @@ class RunState:
     @staticmethod
     def draw(boy):
         if boy.velocityX == 1:
-            boy.image.clip_draw(int(boy.frame) * 100, 0, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
         elif boy.velocityY == 1:
-            boy.image.clip_draw(int(boy.frame) * 100, 60, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 60, 50, 56, boy.x, boy.y)
         elif boy.velocityX == -1:
-            boy.image.clip_draw(int(boy.frame) * 100, 120, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 120, 50, 56, boy.x, boy.y)
         elif boy.velocityY == -1:
-            boy.image.clip_draw(int(boy.frame) * 100, 180, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 180, 50, 56, boy.x, boy.y)
 
 textGroup = Do_Read.TextGroup()
 
@@ -134,7 +139,12 @@ class TalkState:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 4
+        boy.count += 1
+        if boy.count == 5:
+            boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+            boy.count=0
+
+
         boy.x += boy.velocityX * game_framework.frame_time
         boy.y += boy.velocityY * game_framework.frame_time
 
@@ -147,13 +157,13 @@ class TalkState:
     @staticmethod
     def draw(boy):
         if boy.velocityX == 1:
-            boy.image.clip_draw(int(boy.frame) * 100, 0, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
         elif boy.velocityY == 1:
-            boy.image.clip_draw(int(boy.frame) * 100, 60, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 60, 50, 56, boy.x, boy.y)
         elif boy.velocityX == -1:
-            boy.image.clip_draw(int(boy.frame) * 100, 120, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 120, 50, 56, boy.x, boy.y)
         elif boy.velocityY == -1:
-            boy.image.clip_draw(int(boy.frame) * 100, 180, 50, 56, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 50, 180, 50, 56, boy.x, boy.y)
         textGroup.draw(boy)
 
 next_state_table = {
@@ -171,6 +181,7 @@ class Boy:
         self.dirX = 1
         self.dirY = 1
         self.frame = 0
+        self.count = 0
         self.event_que = []
         self.cur_state = RunState
         self.cur_state.enter(self, None)
