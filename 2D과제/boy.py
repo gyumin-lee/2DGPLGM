@@ -58,13 +58,14 @@ class IdleState:
     def exit(boy, event):
         if event == SPACE:
             boy.Do_Read()
-        pass
-
 
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-
+        boy.x += boy.velocityX * game_framework.frame_time
+        boy.x = clamp(25, boy.x, 1200 - 25)
+        boy.y += boy.velocityY * game_framework.frame_time
+        boy.y = clamp(25, boy.y, 800 - 25)
 
     @staticmethod
     def draw(boy):
@@ -76,6 +77,8 @@ class IdleState:
                 boy.image.clip_draw(0, 112, 50, 56, boy.x, boy.y)
             elif boy.dirY == -1:
                 boy.image.clip_draw(0, 168, 50, 56, boy.x, boy.y)
+
+
 
 class RunState:
 
@@ -168,8 +171,8 @@ class TalkState:
             textGroup.draw(boy)
 
 next_state_table = {
-    RunState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState},
-    TalkState: {RIGHT_UP: TalkState, LEFT_UP: TalkState, UP_UP: TalkState, DOWN_UP: TalkState, LEFT_DOWN: TalkState, RIGHT_DOWN: TalkState, UP_DOWN: TalkState, DOWN_DOWN: TalkState, SPACE: RunState},
+    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, UP_UP: IdleState, DOWN_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, UP_DOWN: IdleState, DOWN_DOWN: IdleState, SPACE: TalkState},
+    TalkState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: RunState},
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState}
 }
 class Boy:
@@ -179,12 +182,12 @@ class Boy:
         self.image = load_image('character.png')
         self.velocityX = 0
         self.velocityY = 0
-        self.dirX = 1
+        self.dirX = 0
         self.dirY = 1
         self.frame = 0
         self.count = 0
         self.event_que = []
-        self.cur_state = RunState
+        self.cur_state = IdleState
         self.cur_state.enter(self, None)
 
     def Do_Read(self):
