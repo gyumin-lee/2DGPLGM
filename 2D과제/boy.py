@@ -32,7 +32,6 @@ key_event_table = {
     (SDL_KEYDOWN, SDLK_SPACE): SPACE
 }
 
-
 # Boy States
 class IdleState:
 
@@ -55,31 +54,29 @@ class IdleState:
         elif event == DOWN_UP:
             boy.velocityY += RUN_SPEED_PPS
 
-
     @staticmethod
     def exit(boy, event):
         if event == SPACE:
             boy.Do_Read()
+        pass
 
 
     @staticmethod
     def do(boy):
-        boy.count += 1
-        if boy.count == 5:
-            boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-            boy.count = 0
+        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
 
 
     @staticmethod
     def draw(boy):
-        if boy.velocityX == 1:
-            boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
-        elif boy.velocityY == 1:
-            boy.image.clip_draw(int(boy.frame) * 50, 60, 50, 56, boy.x, boy.y)
-        elif boy.velocityX == -1:
-            boy.image.clip_draw(int(boy.frame) * 50, 120, 50, 56, boy.x, boy.y)
-        elif boy.velocityY == -1:
-            boy.image.clip_draw(int(boy.frame) * 50, 180, 50, 56, boy.x, boy.y)
+            if boy.dirX == 1:
+                boy.image.clip_draw(0, 56, 50, 56, boy.x, boy.y)
+            elif boy.dirY == 1:
+                boy.image.clip_draw(0, 0, 50, 56, boy.x, boy.y)
+            elif boy.dirX == -1:
+                boy.image.clip_draw(0, 112, 50, 56, boy.x, boy.y)
+            elif boy.dirY == -1:
+                boy.image.clip_draw(0, 168, 50, 56, boy.x, boy.y)
+
 class RunState:
 
     @staticmethod
@@ -101,12 +98,14 @@ class RunState:
         elif event == DOWN_UP:
             boy.velocityY += RUN_SPEED_PPS
 
+        boy.dirX = clamp(-1, boy.velocityX, 1)
+        boy.dirY = clamp(-1, boy.velocityY, 1)
+
 
     @staticmethod
     def exit(boy, event):
         if event == SPACE:
             boy.Do_Read()
-        pass
 
     @staticmethod
     def do(boy):
@@ -116,19 +115,21 @@ class RunState:
             boy.count = 0
 
         boy.x += boy.velocityX * game_framework.frame_time
+        boy.x = clamp(25, boy.x, 1200 - 25)
         boy.y += boy.velocityY * game_framework.frame_time
+        boy.y = clamp(25, boy.y, 800 - 25)
 
 
     @staticmethod
     def draw(boy):
-        if boy.velocityX == 1:
+        if boy.dirX == 1:
+            boy.image.clip_draw(int(boy.frame) * 50, 56, 50, 56, boy.x, boy.y)
+        elif boy.dirY == 1:
             boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
-        elif boy.velocityY == 1:
-            boy.image.clip_draw(int(boy.frame) * 50, 60, 50, 56, boy.x, boy.y)
-        elif boy.velocityX == -1:
-            boy.image.clip_draw(int(boy.frame) * 50, 120, 50, 56, boy.x, boy.y)
-        elif boy.velocityY == -1:
-            boy.image.clip_draw(int(boy.frame) * 50, 180, 50, 56, boy.x, boy.y)
+        elif boy.dirX == -1:
+            boy.image.clip_draw(int(boy.frame) * 50, 112, 50, 56, boy.x, boy.y)
+        elif boy.dirY == -1:
+            boy.image.clip_draw(int(boy.frame) * 50, 168, 50, 56, boy.x, boy.y)
 
 textGroup = Do_Read.TextGroup()
 
@@ -156,18 +157,18 @@ class TalkState:
 
     @staticmethod
     def draw(boy):
-        if boy.velocityX == 1:
-            boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
-        elif boy.velocityY == 1:
-            boy.image.clip_draw(int(boy.frame) * 50, 60, 50, 56, boy.x, boy.y)
-        elif boy.velocityX == -1:
-            boy.image.clip_draw(int(boy.frame) * 50, 120, 50, 56, boy.x, boy.y)
-        elif boy.velocityY == -1:
-            boy.image.clip_draw(int(boy.frame) * 50, 180, 50, 56, boy.x, boy.y)
-        textGroup.draw(boy)
+            if boy.dirX == 1:
+                boy.image.clip_draw(int(boy.frame) * 50, 56, 50, 56, boy.x, boy.y)
+            elif boy.dirY == 1:
+                boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
+            elif boy.dirX == -1:
+                boy.image.clip_draw(int(boy.frame) * 50, 112, 50, 56, boy.x, boy.y)
+            elif boy.dirY == -1:
+                boy.image.clip_draw(int(boy.frame) * 50, 168, 50, 56, boy.x, boy.y)
+            textGroup.draw(boy)
 
 next_state_table = {
-    RunState: {RIGHT_UP: RunState, LEFT_UP: IdleState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState},
+    RunState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState},
     TalkState: {RIGHT_UP: TalkState, LEFT_UP: TalkState, UP_UP: TalkState, DOWN_UP: TalkState, LEFT_DOWN: TalkState, RIGHT_DOWN: TalkState, UP_DOWN: TalkState, DOWN_DOWN: TalkState, SPACE: RunState},
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState}
 }
@@ -176,8 +177,8 @@ class Boy:
     def __init__(self):
         self.x, self.y = 600, 400
         self.image = load_image('character.png')
-        self.velocityX = 1
-        self.velocityY = 1
+        self.velocityX = 0
+        self.velocityY = 0
         self.dirX = 1
         self.dirY = 1
         self.frame = 0
