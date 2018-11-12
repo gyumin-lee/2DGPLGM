@@ -4,6 +4,9 @@ class Ware_house:
     def __init__(self):
         self.image = load_image('ware_house.jpg')
 
+    def event(self):
+        pass
+
     def update(self):
         pass
 
