@@ -7,7 +7,8 @@ import game_framework
 import game_world
 
 from boy import  Boy
-from ware_house import Ware_house
+from hall import Hall
+from library import Library
 
 
 
@@ -18,11 +19,13 @@ boy = None
 
 
 def enter():
-    global boy
+    global boy, hall, library
     boy = Boy()
-    ware_house=Ware_house()
-    game_world.add_object(ware_house, 0)
+    hall=Hall()
+    library = Library()
+    game_world.add_object(hall, 0)
     game_world.add_object(boy, 1)
+    game_world.add_object(library, 2)
 
 
 

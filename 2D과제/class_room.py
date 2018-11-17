@@ -1,8 +1,8 @@
 from pico2d import *
 
-class Ware_house:
+class Class_room:
     def __init__(self):
-        self.image = load_image('class_room')
+        self.image = load_image('class_room.jpg')
 
     def update(self):
         pass
