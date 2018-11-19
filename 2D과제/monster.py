@@ -1,215 +1,105 @@
-from pico2d import *
+import random
+import math
 import game_framework
+from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
+from pico2d import *
+import main_state
 
-import game_world
-import Do_Read
-
+# zombie Run Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 20.0  # Km / Hour
+RUN_SPEED_KMPH = 15.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-
-# Boy Action Speed
-# fill expressions correctly
+# zombie Action Speed
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION = 8
-
-# Boy Event
-RIGHT_DOWN, LEFT_DOWN, UP_DOWN, DOWN_DOWN, RIGHT_UP, LEFT_UP, UP_UP, DOWN_UP, SPACE = range(9)
-
-key_event_table = {
-    (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
-    (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN,
-    (SDL_KEYDOWN, SDLK_UP): UP_DOWN,
-    (SDL_KEYDOWN, SDLK_DOWN): DOWN_DOWN,
-    (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
-    (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
-    (SDL_KEYUP, SDLK_UP): UP_UP,
-    (SDL_KEYUP, SDLK_DOWN): DOWN_UP,
-    (SDL_KEYDOWN, SDLK_SPACE): SPACE,
-    (SDL_KEYUP, SDLK_SPACE): SPACE
-}
-
-# Boy States
-class IdleState:
-
-    @staticmethod
-    def enter(boy, event):
-        if event == RIGHT_DOWN:
-            boy.velocityX += RUN_SPEED_PPS
-        elif event == LEFT_DOWN:
-            boy.velocityX -= RUN_SPEED_PPS
-        elif event == UP_DOWN:
-            boy.velocityY += RUN_SPEED_PPS
-        elif event == DOWN_DOWN:
-            boy.velocityY -= RUN_SPEED_PPS
-        elif event == RIGHT_UP:
-            boy.velocityX -= RUN_SPEED_PPS
-        elif event == LEFT_UP:
-            boy.velocityX += RUN_SPEED_PPS
-        elif event == UP_UP:
-            boy.velocityY -= RUN_SPEED_PPS
-        elif event == DOWN_UP:
-            boy.velocityY += RUN_SPEED_PPS
-
-    @staticmethod
-    def exit(boy, event):
-        if event == SPACE:
-            boy.Do_Read()
-
-    @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-        boy.x += boy.velocityX * game_framework.frame_time
-        boy.x = clamp(25, boy.x, 1200 - 25)
-        boy.y += boy.velocityY * game_framework.frame_time
-        boy.y = clamp(25, boy.y, 800 - 25)
-
-    @staticmethod
-    def draw(boy):
-            if boy.dirX == 1:
-                boy.image.clip_draw(0, 56, 50, 56, boy.x, boy.y)
-            elif boy.dirY == 1:
-                boy.image.clip_draw(0, 0, 50, 56, boy.x, boy.y)
-            elif boy.dirX == -1:
-                boy.image.clip_draw(0, 112, 50, 56, boy.x, boy.y)
-            elif boy.dirY == -1:
-                boy.image.clip_draw(0, 168, 50, 56, boy.x, boy.y)
+FRAMES_PER_ACTION = 10
 
 
-
-class RunState:
-
-    @staticmethod
-    def enter(boy, event):
-        if event == RIGHT_DOWN:
-            boy.velocityX += RUN_SPEED_PPS
-        elif event == LEFT_DOWN:
-            boy.velocityX -= RUN_SPEED_PPS
-        elif event == UP_DOWN:
-            boy.velocityY += RUN_SPEED_PPS
-        elif event == DOWN_DOWN:
-            boy.velocityY -= RUN_SPEED_PPS
-        elif event == RIGHT_UP:
-            boy.velocityX -= RUN_SPEED_PPS
-        elif event == LEFT_UP:
-            boy.velocityX += RUN_SPEED_PPS
-        elif event == UP_UP:
-            boy.velocityY -= RUN_SPEED_PPS
-        elif event == DOWN_UP:
-            boy.velocityY += RUN_SPEED_PPS
-
-        boy.dirX = clamp(-1, boy.velocityX, 1)
-        boy.dirY = clamp(-1, boy.velocityY, 1)
+animation_names = ['Attack', 'Dead', 'Idle', 'Walk']
 
 
-    @staticmethod
-    def exit(boy, event):
-        if event == SPACE:
-            boy.Do_Read()
+class Monster:
+    images = None
 
-    @staticmethod
-    def do(boy):
-        boy.count += 1
-        if boy.count == 5:
-            boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-            boy.count = 0
-
-        boy.x += boy.velocityX * game_framework.frame_time
-        boy.x = clamp(25, boy.x, 1200 - 25)
-        boy.y += boy.velocityY * game_framework.frame_time
-        boy.y = clamp(25, boy.y, 800 - 25)
-
-
-    @staticmethod
-    def draw(boy):
-        if boy.dirX == 1:
-            boy.image.clip_draw(int(boy.frame) * 50, 56, 50, 56, boy.x, boy.y)
-        elif boy.dirY == 1:
-            boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
-        elif boy.dirX == -1:
-            boy.image.clip_draw(int(boy.frame) * 50, 112, 50, 56, boy.x, boy.y)
-        elif boy.dirY == -1:
-            boy.image.clip_draw(int(boy.frame) * 50, 168, 50, 56, boy.x, boy.y)
-
-textGroup = Do_Read.TextGroup()
-
-class TalkState:
-    @staticmethod
-    def enter(boy,event):
-        pass
-
-    @staticmethod
-    def do(boy):
-        boy.count += 1
-        if boy.count == 5:
-            boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-            boy.count=0
-
-
-        boy.x += boy.velocityX * game_framework.frame_time
-        boy.y += boy.velocityY * game_framework.frame_time
-
-
-    @staticmethod
-    def exit(boy,event):
-        if event == SPACE:
-            boy.Do_Read()
-
-    @staticmethod
-    def draw(boy):
-            if boy.dirX == 1:
-                boy.image.clip_draw(int(boy.frame) * 50, 56, 50, 56, boy.x, boy.y)
-            elif boy.dirY == 1:
-                boy.image.clip_draw(int(boy.frame) * 50, 0, 50, 56, boy.x, boy.y)
-            elif boy.dirX == -1:
-                boy.image.clip_draw(int(boy.frame) * 50, 112, 50, 56, boy.x, boy.y)
-            elif boy.dirY == -1:
-                boy.image.clip_draw(int(boy.frame) * 50, 168, 50, 56, boy.x, boy.y)
-            textGroup.draw(boy)
-
-next_state_table = {
-    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, UP_UP: IdleState, DOWN_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, UP_DOWN: IdleState, DOWN_DOWN: IdleState, SPACE: TalkState},
-    TalkState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, UP_UP: IdleState, DOWN_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, UP_DOWN: IdleState, DOWN_DOWN: IdleState, SPACE: IdleState},
-    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState}
-}
-class Boy:
+    def load_images(self):
+        if Monster.images == None:
+            Monster.images = {}
+            for name in animation_names:
+                Monster.image.clip_draw(0, 56, 50, 56, Monster.x, Monster.y)
 
     def __init__(self):
-        self.x, self.y = 600, 400
-        self.image = load_image('character.png')
-        self.velocityX = 0
-        self.velocityY = 0
-        self.dirX = 0
-        self.dirY = 1
+        self.x, self.y = 1280 / 4 * 3, 1024 / 4 * 3
+        self.load_images()
+        self.dir = random.random()*2*math.pi # random moving direction
+        self.speed = 0
+        self.timer = 1.0 # change direction every 1 sec when wandering
         self.frame = 0
-        self.count = 0
-        self.event_que = []
-        self.cur_state = IdleState
-        self.cur_state.enter(self, None)
+        self.build_behavior_tree()
 
-    def Do_Read(self):
-        pass
+    def wander(self):
+        self.speed = RUN_SPEED_PPS
+        self.timer -= game_framework.frame_time
+        if self.timer < 0:
+            self.timer += 1.0
+            self.dir = random.random() * 2 * math.pi
 
-    def add_event(self, event):
-        self.event_que.insert(0, event)
+        return BehaviorTree.SUCCESS
+
+    def find_player(self):
+        boy = main_state.get_boy()
+        distance = (boy.x - self.x)**2 + (boy.y - self.y)**2
+        if distance < (PIXEL_PER_METER * 10)**2:
+            self.dir = math.atan2(boy.y - self.y, boy.x - self.x)
+            return BehaviorTree.SUCCESS
+        else:
+            self.speed = 0
+            return BehaviorTree.FAIL
+
+    def move_to_player(self):
+        self.speed = RUN_SPEED_PPS
+        return BehaviorTree.SUCCESS
+
+    def build_behavior_tree(self):
+        wander_node = LeafNode("Wander", self.wander)
+        find_player_node = LeafNode("Find Player", self.find_player)
+        move_to_player_node = LeafNode("Move to Player", self.move_to_player)
+        chase_node = SequenceNode("Chase")
+        chase_node.add_children(find_player_node, move_to_player_node)
+        wander_chase_node = SelectorNode("WanderChase")
+        wander_chase_node.add_children(chase_node, wander_node)
+        self.bt =BehaviorTree(wander_chase_node)
+
+    def get_bb(self):
+        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
 
     def update(self):
-        self.cur_state.do(self)
-        if len(self.event_que) > 0:
-            event = self.event_que.pop()
-            self.cur_state.exit(self, event)
-            self.cur_state = next_state_table[self.cur_state][event]
-            self.cur_state.enter(self, event)
+       self.bt.run()
+
+       self.frame = (self.frame +
+            FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
+
+       self.x += self.speed * math.cos(self.dir) * game_framework.frame_time
+       self.y += self.speed * math.sin(self.dir) * game_framework.frame_time
+
+       self.x = clamp(50, self.x, 1280 - 50)
+       self.y = clamp(50, self.y, 1024 - 50)
+
 
     def draw(self):
-        self.cur_state.draw(self)
-
+        if math.cos(self.dir) < 0:
+            if self.speed == 0:
+                Monster.images['Idle'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 100, 100)
+            else:
+                Monster.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 100, 100)
+        else:
+            if self.speed == 0:
+                Monster.images['Idle'][int(self.frame)].draw(self.x, self.y, 100, 100)
+            else:
+                Monster.images['Walk'][int(self.frame)].draw(self.x, self.y, 100, 100)
 
     def handle_event(self, event):
-        if (event.type, event.key) in key_event_table:
-            key_event = key_event_table[(event.type, event.key)]
-            self.add_event(key_event)
+        pass
+

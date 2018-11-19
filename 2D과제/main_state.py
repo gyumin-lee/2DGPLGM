@@ -25,7 +25,7 @@ def enter():
     library = Library()
     game_world.add_object(hall, 0)
     game_world.add_object(boy, 1)
-    game_world.add_object(library, 2)
+    game_world.add_object(library, 0)
 
 
 
