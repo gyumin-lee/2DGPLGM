@@ -8,4 +8,4 @@ class Music_room:
         pass
 
     def draw(self):
-        self.image.draw(600,400)
+        self.image.draw(600, 400)

@@ -46,6 +46,7 @@ class IdleState:
             boy.velocityY += RUN_SPEED_PPS
         elif event == DOWN_DOWN:
             boy.velocityY -= RUN_SPEED_PPS
+
         elif event == RIGHT_UP:
             boy.velocityX -= RUN_SPEED_PPS
         elif event == LEFT_UP:
