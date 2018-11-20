@@ -4,7 +4,7 @@ class Hall:
     def __init__(self):
         self.image = load_image('hall.jpg')
 
-    def update(self, boy):
+    def update(self):
         pass
 
     def draw(self):

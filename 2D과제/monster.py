@@ -5,20 +5,20 @@ from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
 from pico2d import *
 import main_state
 
-# zombie Run Speed
+# monster Run Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 RUN_SPEED_KMPH = 15.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-# zombie Action Speed
+# monster Action Speed
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 10
 
 
-animation_names = ['Attack', 'Dead', 'Idle', 'Walk']
+animation_names = ['Idle', 'Walk']
 
 
 class Monster:
@@ -28,7 +28,7 @@ class Monster:
         if Monster.images == None:
             Monster.images = {}
             for name in animation_names:
-                Monster.image.clip_draw(0, 56, 50, 56, Monster.x, Monster.y)
+                Monster.images[name] = [load_image("./zombiefiles/female/"+ name + " (%d)" % i + ".png") for i in range(1, 11)]
 
     def __init__(self):
         self.x, self.y = 1280 / 4 * 3, 1024 / 4 * 3
@@ -102,4 +102,3 @@ class Monster:
 
     def handle_event(self, event):
         pass
-

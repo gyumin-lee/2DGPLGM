@@ -10,7 +10,6 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-
 # Boy Action Speed
 # fill expressions correctly
 TIME_PER_ACTION = 0.5
@@ -80,10 +79,7 @@ class IdleState:
             elif boy.dirY == -1:
                 boy.image.clip_draw(0, 168, 50, 56, boy.x, boy.y)
 
-
-
 class RunState:
-
     @staticmethod
     def enter(boy, event):
         if event == RIGHT_DOWN:
@@ -148,8 +144,7 @@ class TalkState:
         boy.count += 1
         if boy.count == 5:
             boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-            boy.count=0
-
+            boy.count = 0
 
         boy.x += boy.velocityX * game_framework.frame_time
         boy.y += boy.velocityY * game_framework.frame_time
