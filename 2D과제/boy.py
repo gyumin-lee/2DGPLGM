@@ -64,9 +64,12 @@ class IdleState:
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
         boy.x += boy.velocityX * game_framework.frame_time
-        boy.x = clamp(25, boy.x, 1200 - 25)
         boy.y += boy.velocityY * game_framework.frame_time
+
+        boy.x = clamp(25, boy.x, 1200 - 25)
         boy.y = clamp(25, boy.y, 800 - 25)
+
+
 
     @staticmethod
     def draw(boy):
@@ -121,6 +124,8 @@ class RunState:
         boy.y = clamp(25, boy.y, 800 - 25)
 
 
+
+
     @staticmethod
     def draw(boy):
         if boy.dirX == 1:
@@ -167,11 +172,14 @@ class TalkState:
                 boy.image.clip_draw(int(boy.frame) * 50, 168, 50, 56, boy.x, boy.y)
             textGroup.draw(boy)
 
+
 next_state_table = {
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, UP_UP: IdleState, DOWN_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, UP_DOWN: IdleState, DOWN_DOWN: IdleState, SPACE: TalkState},
     TalkState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, UP_UP: IdleState, DOWN_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, UP_DOWN: IdleState, DOWN_DOWN: IdleState, SPACE: IdleState},
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState}
 }
+
+
 class Boy:
 
     def __init__(self):
@@ -186,6 +194,9 @@ class Boy:
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
+
+    def get_bb(self):
+        return self.x -30, self.y -30, self.x + 30, self.y + 30
 
     def Do_Read(self):
         pass
@@ -203,6 +214,7 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
+        draw_rectangle(*self.get_bb())
 
 
     def handle_event(self, event):
