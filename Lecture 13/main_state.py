@@ -82,7 +82,7 @@ def update():
         if collide(grass, ball):
             ball.stop()
 
-    delay(0.2)
+
 
 
 

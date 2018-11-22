@@ -6,11 +6,12 @@ from pico2d import*
 import game_framework
 import game_world
 
+
 from boy import  Boy
 from hall import Hall
+from block import block
 
 name = "MainState"
-
 
 
 boy = None
@@ -26,13 +27,14 @@ def collide(a, b):
     return True
 
 def enter():
-    global boy, hall
+    global boy, hall, block
     boy = Boy()
     hall= Hall()
+    #block = block(258, 97, 258, 97)
+    block = block(245, 570, 245, 180)
     game_world.add_object(hall, 0)
+    game_world.add_object(block, 0)
     game_world.add_object(boy, 1)
-
-
 
 
 def exit():
@@ -60,12 +62,13 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+    if collide(boy,block):
+       boy.stop()
+
 
 def draw():
     clear_canvas()
     for game_object in game_world.all_objects():
         game_object.draw()
-
-
 
     update_canvas()

@@ -151,12 +151,16 @@ class Boy:
 
     def eat(self, ball):
        self.eat_sound.play()
-       global count
-       count = 0
+
 
 
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+
+    def set_background(self, bg):
+        self.bg = bg
+        self.x = self.bg.w / 2
+        self.y = self.bg.h / 2
 
 
     def add_event(self, event):

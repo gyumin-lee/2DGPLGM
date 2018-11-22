@@ -1,5 +1,6 @@
 from pico2d import *
 import game_world
+import block
 
 class Hall:
     def __init__(self):
@@ -11,5 +12,5 @@ class Hall:
     def draw(self):
         self.image.draw(600,400)
 
-    def block(self):
-        
+
+

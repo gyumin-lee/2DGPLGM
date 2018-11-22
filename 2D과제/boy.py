@@ -46,14 +46,7 @@ class IdleState:
         elif event == DOWN_DOWN:
             boy.velocityY -= RUN_SPEED_PPS
 
-        elif event == RIGHT_UP:
-            boy.velocityX -= RUN_SPEED_PPS
-        elif event == LEFT_UP:
-            boy.velocityX += RUN_SPEED_PPS
-        elif event == UP_UP:
-            boy.velocityY -= RUN_SPEED_PPS
-        elif event == DOWN_UP:
-            boy.velocityY += RUN_SPEED_PPS
+
 
     @staticmethod
     def exit(boy, event):
@@ -62,9 +55,8 @@ class IdleState:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-        boy.x += boy.velocityX * game_framework.frame_time
-        boy.y += boy.velocityY * game_framework.frame_time
+
+
 
         boy.x = clamp(25, boy.x, 1200 - 25)
         boy.y = clamp(25, boy.y, 800 - 25)
@@ -73,14 +65,14 @@ class IdleState:
 
     @staticmethod
     def draw(boy):
-            if boy.dirX == 1:
-                boy.image.clip_draw(0, 56, 50, 56, boy.x, boy.y)
-            elif boy.dirY == 1:
-                boy.image.clip_draw(0, 0, 50, 56, boy.x, boy.y)
-            elif boy.dirX == -1:
-                boy.image.clip_draw(0, 112, 50, 56, boy.x, boy.y)
-            elif boy.dirY == -1:
-                boy.image.clip_draw(0, 168, 50, 56, boy.x, boy.y)
+        if boy.dirX == 1:
+            boy.image.clip_draw(0, 56, 50, 56, boy.x, boy.y)
+        elif boy.dirY == 1:
+            boy.image.clip_draw(0, 0, 50, 56, boy.x, boy.y)
+        elif boy.dirX == -1:
+             boy.image.clip_draw(0, 112, 50, 56, boy.x, boy.y)
+        elif boy.dirY == -1:
+             boy.image.clip_draw(0, 168, 50, 56, boy.x, boy.y)
 
 class RunState:
     @staticmethod
@@ -93,14 +85,7 @@ class RunState:
             boy.velocityY += RUN_SPEED_PPS
         elif event == DOWN_DOWN:
             boy.velocityY -= RUN_SPEED_PPS
-        elif event == RIGHT_UP:
-            boy.velocityX -= RUN_SPEED_PPS
-        elif event == LEFT_UP:
-            boy.velocityX += RUN_SPEED_PPS
-        elif event == UP_UP:
-            boy.velocityY -= RUN_SPEED_PPS
-        elif event == DOWN_UP:
-            boy.velocityY += RUN_SPEED_PPS
+
 
         boy.dirX = clamp(-1, boy.velocityX, 1)
         boy.dirY = clamp(-1, boy.velocityY, 1)
@@ -108,6 +93,8 @@ class RunState:
 
     @staticmethod
     def exit(boy, event):
+        boy.velocityY = 0
+        boy.velocityX = 0
         if event == SPACE:
             boy.Do_Read()
 
@@ -118,9 +105,23 @@ class RunState:
             boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
             boy.count = 0
 
-        boy.x += boy.velocityX * game_framework.frame_time
+        if boy.velocityX >0:
+            boy.x += boy.velocityX * game_framework.frame_time
+            boy.velocityY = 0
+        if boy.velocityX <0:
+            boy.x = boy.x + (boy.velocityX * game_framework.frame_time)
+            boy.velocityY = 0
+        if boy.velocityY > 0:
+            boy.y += boy.velocityY * game_framework.frame_time
+            boy.velocityX = 0
+        if boy.velocityY < 0:
+            boy.y += boy.velocityY * game_framework.frame_time
+            boy.velocityX = 0
+
+
+
+
         boy.x = clamp(25, boy.x, 1200 - 25)
-        boy.y += boy.velocityY * game_framework.frame_time
         boy.y = clamp(25, boy.y, 800 - 25)
 
 
@@ -174,9 +175,9 @@ class TalkState:
 
 
 next_state_table = {
-    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, UP_UP: IdleState, DOWN_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, UP_DOWN: IdleState, DOWN_DOWN: IdleState, SPACE: TalkState},
+    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, UP_UP: IdleState, DOWN_UP: IdleState, SPACE: TalkState},
     TalkState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, UP_UP: IdleState, DOWN_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, UP_DOWN: IdleState, DOWN_DOWN: IdleState, SPACE: IdleState},
-    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, UP_UP: RunState, DOWN_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState}
+    IdleState: { LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, SPACE: TalkState}
 }
 
 
@@ -208,6 +209,10 @@ class Boy:
         self.cur_state.do(self)
         if len(self.event_que) > 0:
             event = self.event_que.pop()
+            if(event not in next_state_table[self.cur_state]) == True:
+                return
+            if self.cur_state == next_state_table[self.cur_state][event]:
+                return
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
@@ -215,9 +220,21 @@ class Boy:
     def draw(self):
         self.cur_state.draw(self)
         draw_rectangle(*self.get_bb())
-
+        print(self.x, self.y)
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
+
+    def stop(self):
+        self.x -= self.velocityX / 10
+        self.y -= self.velocityY / 10
+
+
+
+
+
+
+
+
