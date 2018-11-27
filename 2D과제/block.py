@@ -1,7 +1,7 @@
 from pico2d import *
 import game_world
 
-class block:
+class Block:
     def __init__(self, x, y , sub_x, sub_y):
         self.image = None
         self.x = x
