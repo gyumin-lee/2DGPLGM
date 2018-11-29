@@ -9,6 +9,7 @@ import game_world
 
 from boy import  Boy
 from hall import Hall
+from library import Library
 from block import Block
 
 name = "MainState"
@@ -32,14 +33,14 @@ def enter():
     hall= Hall()
     block = Block(258, 97, 258, 97)
     block1 = Block(245, 570, 245, 180)
-    #block2 = Block()
-    #block3 = Block()
+    block2 = Block(937, 611, 270, 215)
+    block3 = Block(945, 106, 228, 70)
 
     game_world.add_object(hall, 0)
     game_world.add_object(block, 0)
     game_world.add_object(block1, 0)
-   # game_world.add_object(block2, 0)
-    # game_world.add_object(block3, 0)
+    game_world.add_object(block2, 0)
+    game_world.add_object(block3, 0)
     game_world.add_object(boy, 1)
 
 
@@ -72,10 +73,10 @@ def update():
         boy.stop()
     if collide(boy, block1):
         boy.stop()
-    #if collide(boy, block2):
-    #    boy.stop()
-   # if collide(boy, block3):
-     #   boy.stop()
+    if collide(boy, block2):
+        boy.stop()
+    if collide(boy, block3):
+        boy.stop()
 
 
 def draw():
