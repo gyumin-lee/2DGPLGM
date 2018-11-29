@@ -11,11 +11,13 @@ from boy import  Boy
 from hall import Hall
 from library import Library
 from block import Block
+from monster import Monster
 
 name = "MainState"
 
 
 boy = None
+monster = None
 
 def collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -28,15 +30,18 @@ def collide(a, b):
     return True
 
 def enter():
-    global boy, hall, block, block1, block2, block3
+    global boy, mosnter, hall, library, block, block1, block2, block3
     boy = Boy()
+    monster = Monster()
     hall= Hall()
+
     block = Block(258, 97, 258, 97)
     block1 = Block(245, 570, 245, 180)
     block2 = Block(937, 611, 270, 215)
     block3 = Block(945, 106, 228, 70)
 
     game_world.add_object(hall, 0)
+    game_world.add_object(monster, 1)
     game_world.add_object(block, 0)
     game_world.add_object(block1, 0)
     game_world.add_object(block2, 0)
