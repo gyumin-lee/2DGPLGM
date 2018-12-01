@@ -18,17 +18,22 @@ ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 10
 
 
-animation_names = ['Walk']
+animation_names = ['Idle', 'Walk']
 
 
 class Monster:
     images = None
 
+    def load_images(self):
+        if Monster.images == None:
+            Monster.images = {}
+            for name in animation_names:
+                Monster.images[name] = [load_image("./zombiefiles/female/"+ name + " (%d)" % i + ".png") for i in range(1, 11)]
+
     def __init__(self):
         self.x, self.y = 1280 / 4 * 3, 1024 / 4 * 3
-        self.image = load_image('monster.png')
-        self.dirX = 0
-        self.dirY = 1
+        self.load_images()
+        self.dir = random.random()*2*math.pi # random moving direction
         self.speed = 0
         self.timer = 1.0 # change direction every 1 sec when wandering
         self.frame = 0
@@ -76,22 +81,24 @@ class Monster:
        self.frame = (self.frame +
             FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
 
-
        self.x += self.speed * math.cos(self.dir) * game_framework.frame_time
        self.y += self.speed * math.sin(self.dir) * game_framework.frame_time
 
-       self.x = clamp(25, self.x, 1200 - 25)
-       self.y = clamp(25, self.y, 800 - 25)
+       self.x = clamp(50, self.x, 1280 - 50)
+       self.y = clamp(50, self.y, 1024 - 50)
 
 
     def draw(self):
-        if self.dirX == 1:
-            self.image.clip_draw(int(self.frame) * 50, 100, 50, 100, self.x, self.y)
-        elif self.dirY == 1:
-            self.image.clip_draw(int(self.frame) * 50, 0, 50, 100, self.x, self.y)
-        elif self.dirX == -1:
-            self.image.clip_draw(int(self.frame) * 50, 200, 50, 100, self.x, self.y)
-        elif self.dirY == -1:
-            self.image.clip_draw(int(self.frame) * 50, 300, 50, 100, self.x, self.y)
+        if math.cos(self.dir) < 0:
+            if self.speed == 0:
+                Monster.images['Idle'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 100, 100)
+            else:
+                Monster.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 100, 100)
+        else:
+            if self.speed == 0:
+                Monster.images['Idle'][int(self.frame)].draw(self.x, self.y, 100, 100)
+            else:
+                Monster.images['Walk'][int(self.frame)].draw(self.x, self.y, 100, 100)
+
     def handle_event(self, event):
         pass
