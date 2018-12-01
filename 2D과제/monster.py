@@ -79,13 +79,13 @@ class Monster:
        self.bt.run()
 
        self.frame = (self.frame +
-            FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
+            FRAMES_PER_ACTION *self.speed * math.cos(self.dir) * game_framework.frame_time ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
 
-       self.x += self.speed * math.cos(self.dir) * game_framework.frame_time
+       self.x +=
        self.y += self.speed * math.sin(self.dir) * game_framework.frame_time
 
-       self.x = clamp(50, self.x, 1280 - 50)
-       self.y = clamp(50, self.y, 1024 - 50)
+       self.x = clamp(50, self.x, 1280 - 560)
+       self.y = clamp(50, self.y, 1024 - 560)
 
 
     def draw(self):
