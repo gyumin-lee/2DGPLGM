@@ -17,81 +17,32 @@ TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 10
 
-
-animation_names = ['Walk']
-
-
 class Monster:
-    images = None
-
-    def __init__(self):
-        self.x, self.y = 1280 / 4 * 3, 1024 / 4 * 3
+    def __int__(self):
+        self.x, self.y = 200, 600
+        self.frame = 0
         self.image = load_image('monster.png')
         self.dirX = 0
         self.dirY = 1
-        self.speed = 0
-        self.timer = 1.0 # change direction every 1 sec when wandering
-        self.frame = 0
-        self.build_behavior_tree()
 
-    def wander(self):
-        self.speed = RUN_SPEED_PPS
-        self.timer -= game_framework.frame_time
-        if self.timer < 0:
-            self.timer += 1.0
-            self.dir = random.random() * 2 * math.pi
-
-        return BehaviorTree.SUCCESS
-
-    def find_player(self):
-        boy = main_state.get_boy()
-        distance = (boy.x - self.x)**2 + (boy.y - self.y)**2
-        if distance < (PIXEL_PER_METER * 10)**2:
-            self.dir = math.atan2(boy.y - self.y, boy.x - self.x)
-            return BehaviorTree.SUCCESS
-        else:
-            self.speed = 0
-            return BehaviorTree.FAIL
-
-    def move_to_player(self):
-        self.speed = RUN_SPEED_PPS
-        return BehaviorTree.SUCCESS
-
-    def build_behavior_tree(self):
-        wander_node = LeafNode("Wander", self.wander)
-        find_player_node = LeafNode("Find Player", self.find_player)
-        move_to_player_node = LeafNode("Move to Player", self.move_to_player)
-        chase_node = SequenceNode("Chase")
-        chase_node.add_children(find_player_node, move_to_player_node)
-        wander_chase_node = SelectorNode("WanderChase")
-        wander_chase_node.add_children(chase_node, wander_node)
-        self.bt =BehaviorTree(wander_chase_node)
-
-    def get_bb(self):
-        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+    def get__bb(self):
+        return self.x -30, self.y-30, self.x +30, self.y+30
 
     def update(self):
-       self.bt.run()
+        self.x += self.dirX
+        self.y += self.dirY
+        if self.x >= 600:
+            self.dirX = -1
+        elif self.x <= 0:
+            self.dirX = 1
 
-       self.frame = (self.frame +
-            FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
-
-
-       self.x += self.speed * math.cos(self.dir) * game_framework.frame_time
-       self.y += self.speed * math.sin(self.dir) * game_framework.frame_time
-
-       self.x = clamp(25, self.x, 1200 - 25)
-       self.y = clamp(25, self.y, 800 - 25)
-
+        if self.y >=400:
+            self.dirY = 1
+        elif self.y<=0:
+            self.dirY =-1
 
     def draw(self):
-        if self.dirX == 1:
-            self.image.clip_draw(int(self.frame) * 50, 100, 50, 100, self.x, self.y)
-        elif self.dirY == 1:
-            self.image.clip_draw(int(self.frame) * 50, 0, 50, 100, self.x, self.y)
-        elif self.dirX == -1:
-            self.image.clip_draw(int(self.frame) * 50, 200, 50, 100, self.x, self.y)
-        elif self.dirY == -1:
-            self.image.clip_draw(int(self.frame) * 50, 300, 50, 100, self.x, self.y)
-    def handle_event(self, event):
-        pass
+        draw_rectangle(*self.get_bb())
+        print(self.x, self.y)
+
+
