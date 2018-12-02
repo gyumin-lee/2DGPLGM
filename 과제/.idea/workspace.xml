@@ -4,12 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/playgame.py" line="8" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2954dd08-41a2-4e6a-b60e-2e8d56641faf" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../2D과제/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../2D과제/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../2D과제/hall.py" beforeDir="false" afterPath="$PROJECT_DIR$/../2D과제/hall.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../2D과제/main_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/../2D과제/main_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../2D과제/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/../2D과제/monster.py" afterDir="false" />
-    </list>
+    <list default="true" id="2954dd08-41a2-4e6a-b60e-2e8d56641faf" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +300,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="75" y="47" width="784" height="832" extended-state="1" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25301206" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
